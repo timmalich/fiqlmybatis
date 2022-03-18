@@ -21,6 +21,7 @@ public class UserTable extends CustomSqlTable {
         super("public.users");
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public SqlColumn findColumn(String propertyName) {
         return columnMap.get(propertyName);
     }
