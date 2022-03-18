@@ -1,0 +1,8 @@
+server:
+  port: 8271
+spring:
+  flyway:
+    schemas: public
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
