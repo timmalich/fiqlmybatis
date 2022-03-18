@@ -1,4 +1,4 @@
-package de.tmalich.example.fiqlmybatis;
+package de.tmalich.example.fiqlmybatis.web;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import de.tmalich.example.fiqlmybatis.MyBatisFilterVisitor;
 import de.tmalich.example.fiqlmybatis.tables.CustomSqlTable;
 import de.tmalich.example.fiqlmybatis.domain.User;
 import de.tmalich.example.fiqlmybatis.mapper.UsersMapper;
