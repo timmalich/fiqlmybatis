@@ -22,11 +22,9 @@ import cz.jirutka.rsql.parser.ast.RSQLVisitor;
 import de.tmalich.example.fiqlmybatis.tables.CustomSqlTable;
 
 public class MyBatisFilterVisitor implements RSQLVisitor<SqlCriterion, Object> {
-    final QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder;
     final CustomSqlTable sqlTable;
 
-    public MyBatisFilterVisitor(QueryExpressionDSL<SelectModel> builder, CustomSqlTable sqlTable) {
-        this.builder = builder.where();
+    public MyBatisFilterVisitor(CustomSqlTable sqlTable) {
         this.sqlTable = sqlTable;
     }
 

@@ -9,17 +9,15 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.SqlCriterion;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
-import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
-import org.mybatis.dynamic.sql.select.SelectModel;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import de.tmalich.example.fiqlmybatis.tables.CustomSqlTable;
-import de.tmalich.example.fiqlmybatis.MyBatisFilterVisitor;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
+import de.tmalich.example.fiqlmybatis.MyBatisFilterVisitor;
 import de.tmalich.example.fiqlmybatis.domain.User;
+import de.tmalich.example.fiqlmybatis.tables.CustomSqlTable;
 import de.tmalich.example.fiqlmybatis.tables.UserTable;
 
 @SpringBootTest
@@ -28,7 +26,7 @@ class UserMapperTest {
     UsersMapper usersMapper;
 
     @Test
-    void findAll(){
+    void findAll() {
         List<User> users = usersMapper.findAll();
         assertThat(users, hasSize(greaterThanOrEqualTo(2)));
         assertThat(users.get(0).getFirstName(), is("Linus"));
@@ -91,12 +89,11 @@ class UserMapperTest {
 
     private List<User> getFilteredResult(String filter) throws Exception {
         CustomSqlTable table = new UserTable();
-        QueryExpressionDSL<SelectModel> builder = select(table.allColumns())
-                .from(table);
-        MyBatisFilterVisitor visitor = new MyBatisFilterVisitor(builder, table);
+        MyBatisFilterVisitor visitor = new MyBatisFilterVisitor(table);
         Node rootNode = new RSQLParser().parse(filter);
         SqlCriterion criterion = rootNode.accept(visitor);
-        SelectStatementProvider selectStatement = builder.where(criterion).build()
+        SelectStatementProvider selectStatement = select(table.allColumns())
+                .from(table).where(criterion).build()
                 .render(RenderingStrategies.MYBATIS3);
         return usersMapper.findByFilter(selectStatement);
     }

@@ -54,10 +54,9 @@ public class UserController {
             return usersMapper.findAll();
         }
         CustomSqlTable table = new UserTable();
-        QueryExpressionDSL<SelectModel> builder = select(table.allColumns()).from(table);
         Node rootNode = new RSQLParser().parse(filter);
-        SqlCriterion criterion = rootNode.accept(new MyBatisFilterVisitor(builder, table));
-        SelectStatementProvider selectStatement = builder.where(criterion).build()
+        SqlCriterion criterion = rootNode.accept(new MyBatisFilterVisitor(table));
+        SelectStatementProvider selectStatement = select(table.allColumns()).from(table).where(criterion).build()
                 .render(RenderingStrategies.MYBATIS3);
         return usersMapper.findByFilter(selectStatement);
     }
